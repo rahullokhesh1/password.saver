@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Saver</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: black;
+            font-family: 'Poppins', sans-serif;
+            color: red;
+            padding: 20px;
+        }
+
+        h1 {
+            color: red;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        #savedPasswords {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Password Saver</h1>
+    <input type="text" id="nameInput" placeholder="Name">
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button id="nextButton" onclick="savePassword()">Next</button><br>
+
+    <button id="showPasswordsButton" onclick="showSavedPasswords()">Show Saved Passwords</button>
+
+    <div id="savedPasswords">
+        <h2>Saved Passwords</h2>
+        <ul id="passwordList"></ul>
+    </div>
+
+    <script>
+        const savedPasswords = document.getElementById("savedPasswords");
+        const showPasswordsButton = document.getElementById("showPasswordsButton");
+        const passwordList = document.getElementById("passwordList");
+
+        function savePassword() {
+            const nameInput = document.getElementById("nameInput");
+            const passwordInput = document.getElementById("passwordInput");
+            const name = nameInput.value;
+            const password = passwordInput.value;
+
+            if (name && password) {
+                // Save the password (for this example, we'll just display it)
+                passwordList.innerHTML += `<li>${name}: ${password}</li>`;
+                nameInput.value = '';
+                passwordInput.value = '';
+                showPasswordsButton.style.display = "block";
+            }
+        }
+
+        function showSavedPasswords() {
+            savedPasswords.style.display = "block";
+        }
+    </script>
+</body>
+</html>
