@@ -16,12 +16,24 @@
             text-align: center;
         }
 
+        /* Center-align the container horizontally and vertically */
+        #container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
         input {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
+            color: red;
+            background-color: transparent;
+            text-align: center; /* Center-align the text */
         }
 
         button {
@@ -39,20 +51,30 @@
             display: none;
             margin-top: 20px;
         }
+        h3{
+            text-align: center;
+        }
+        p {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <h1>Password Saver</h1>
-    <input type="text" id="nameInput" placeholder="Name">
-    <input type="password" id="passwordInput" placeholder="Password">
-    <button id="nextButton" onclick="savePassword()">Next</button><br>
+    <div id="container">
+        <h1>Password Saver</h1>
+        <input type="text" id="nameInput" placeholder="Name">
+        <input type="password" id="passwordInput" placeholder="Password">
+        <button id="nextButton" onclick="savePassword()">Next</button><br>
 
-    <button id="showPasswordsButton" onclick="showSavedPasswords()">Show Saved Passwords</button>
+        <button id="showPasswordsButton" onclick="showSavedPasswords()">Show Saved Passwords</button>
 
-    <div id="savedPasswords">
-        <h2>Saved Passwords</h2>
-        <ul id="passwordList"></ul>
+        <div id="savedPasswords">
+            <h2>Saved Passwords</h2>
+            <ul id="passwordList"></ul>
+        </div>
     </div>
+    <h3>About You</h3>
+    <P>I Know About You That You Will Forget Your Passwords Easily. So That Iam Here To Save Your Passwords</P>
 
     <script>
         const savedPasswords = document.getElementById("savedPasswords");
@@ -66,15 +88,26 @@
             const password = passwordInput.value;
 
             if (name && password) {
-                // Save the password (for this example, we'll just display it)
-                passwordList.innerHTML += `<li>${name}: ${password}</li>`;
+                // Save the password
+                const savedPassword = { name, password };
+                const savedPasswordsArray = JSON.parse(localStorage.getItem("savedPasswords")) || [];
+                savedPasswordsArray.push(savedPassword);
+                localStorage.setItem("savedPasswords", JSON.stringify(savedPasswordsArray));
+
+                // Clear input fields
                 nameInput.value = '';
                 passwordInput.value = '';
+
                 showPasswordsButton.style.display = "block";
             }
         }
 
         function showSavedPasswords() {
+            const savedPasswordsArray = JSON.parse(localStorage.getItem("savedPasswords")) || [];
+            passwordList.innerHTML = "";
+            savedPasswordsArray.forEach((entry, index) => {
+                passwordList.innerHTML += `<li>${entry.name}: ${entry.password}</li>`;
+            });
             savedPasswords.style.display = "block";
         }
     </script>
